@@ -28,7 +28,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @Slf4j
 public class ConnectManager {
 
-    private volatile static ConnectManager connectManage;
+    private volatile static ConnectManager connectManager;
 
     private EventLoopGroup eventLoopGroup = new NioEventLoopGroup(4);
     private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(16, 16,
@@ -47,14 +47,14 @@ public class ConnectManager {
     }
 
     public static ConnectManager getInstance() {
-        if (connectManage == null) {
+        if (connectManager == null) {
             synchronized (ConnectManager.class) {
-                if (connectManage == null) {
-                    connectManage = new ConnectManager();
+                if (connectManager == null) {
+                    connectManager = new ConnectManager();
                 }
             }
         }
-        return connectManage;
+        return connectManager;
     }
 
     public void updateConnectedServer(List<String> allServerAddress) {

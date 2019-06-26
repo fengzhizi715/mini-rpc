@@ -34,7 +34,17 @@ public class RpcClient {
         );
     }
 
+    public static <T> RPCProxy createAsync(Class<T> interfaceClass) {
+        return new RPCProxy<T>(interfaceClass);
+    }
+
     public static void submit(Runnable task) {
         threadPoolExecutor.submit(task);
+    }
+
+    public void stop() {
+        threadPoolExecutor.shutdown();
+        serviceDiscovery.stop();
+        ConnectManager.getInstance().stop();
     }
 }

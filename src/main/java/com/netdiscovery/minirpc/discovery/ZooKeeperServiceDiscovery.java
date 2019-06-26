@@ -25,11 +25,12 @@ public class ZooKeeperServiceDiscovery implements ServiceDiscovery {
     private volatile List<String> serviceAddressList = new ArrayList<>();
 
     private String registryAddress; // 注册中心的地址
+    private ZooKeeper zk;
 
     public ZooKeeperServiceDiscovery(String registryAddress) {
         this.registryAddress = registryAddress;
 
-        ZooKeeper zk = connectServer();
+        zk = connectServer();
         if (zk != null) {
             watchNode(zk);
         }
@@ -51,6 +52,16 @@ public class ZooKeeperServiceDiscovery implements ServiceDiscovery {
         return data;
     }
 
+    @Override
+    public void stop() {
+        if(zk!=null){
+            try {
+                zk.close();
+            } catch (InterruptedException e) {
+                log.error("", e);
+            }
+        }
+    }
 
     /**
      * 连接 zookeeper

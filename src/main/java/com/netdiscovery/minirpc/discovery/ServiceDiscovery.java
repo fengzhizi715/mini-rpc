@@ -10,4 +10,6 @@ public interface ServiceDiscovery {
      * @return
      */
     String discover();
+
+    void stop();
 }
