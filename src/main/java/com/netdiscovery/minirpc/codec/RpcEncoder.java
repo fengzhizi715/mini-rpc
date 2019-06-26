@@ -1,5 +1,6 @@
 package com.netdiscovery.minirpc.codec;
 
+import com.netdiscovery.minirpc.utils.SerializableUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -18,5 +19,11 @@ public class RpcEncoder extends MessageToByteEncoder {
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
 
+        if (genericClass.isInstance(msg)) {
+            String json = SerializableUtils.toJson(msg);
+            byte[] data = json.getBytes();
+            out.writeInt(data.length);
+            out.writeBytes(data);
+        }
     }
 }

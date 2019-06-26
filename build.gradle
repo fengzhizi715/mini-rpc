@@ -57,4 +57,5 @@ dependencies {
     implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
     implementation 'org.springframework:spring-context:5.1.8.RELEASE'
     implementation 'org.apache.zookeeper:zookeeper:3.4.14'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
