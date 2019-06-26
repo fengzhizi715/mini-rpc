@@ -5,4 +5,5 @@ package com.netdiscovery.minirpc.discovery;
  */
 public interface ServiceDiscovery {
 
+    String discover();
 }
