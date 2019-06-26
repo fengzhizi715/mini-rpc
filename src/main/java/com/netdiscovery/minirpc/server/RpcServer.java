@@ -21,10 +21,9 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -37,7 +36,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
     private String serverAddress;
     private ServiceRegistry serviceRegistry;
 
-    private Map<String, Object> handlerMap = new HashMap<>();
+    private Map<String, Object> handlerMap = new ConcurrentHashMap<>();
     private static ThreadPoolExecutor threadPoolExecutor;
 
     private EventLoopGroup bossGroup = null;
@@ -58,7 +57,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
         if (Preconditions.isNotBlank(serviceBeanMap)) {
             for (Object serviceBean : serviceBeanMap.values()) {
                 String interfaceName = serviceBean.getClass().getAnnotation(RpcService.class).value().getName();
-                log.info("Loading service: {}", interfaceName);
+                log.info("loading service: {}", interfaceName);
                 handlerMap.put(interfaceName, serviceBean);
             }
         }
@@ -92,7 +91,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
 
     public RpcServer addService(String interfaceName, Object serviceBean) {
         if (!handlerMap.containsKey(interfaceName)) {
-            log.info("Loading service: {}", interfaceName);
+            log.info("loading service: {}", interfaceName);
             handlerMap.put(interfaceName, serviceBean);
         }
 
@@ -123,7 +122,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean {
             int port = Integer.parseInt(array[1]);
 
             ChannelFuture future = bootstrap.bind(host, port).sync();
-            log.info("Server started on port {}", port);
+            log.info("server started on port {}", port);
 
             if (serviceRegistry != null) {
                 serviceRegistry.register(serverAddress);
