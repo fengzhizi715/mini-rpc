@@ -1,2 +1,5 @@
 rootProject.name = 'mini-rpc'
+include 'rpc'
+include 'example'
+
 

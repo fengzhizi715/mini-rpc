@@ -22,7 +22,7 @@ ext {
 
             commons_pool2             : "2.6.0",
 
-            lombok                    : "1.18.0",
+            lombok                    : "1.18.4",
 
             logback                   : "1.2.3",
 
@@ -39,8 +39,6 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
-def libs = rootProject.ext.libraries // 库
-
 repositories {
     jcenter()
     mavenCentral()
@@ -48,14 +46,4 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-
-    implementation 'io.netty:netty-all:4.1.17.Final'
-    implementation "ch.qos.logback:logback-classic:${libs.logback}"
-    implementation "ch.qos.logback:logback-core:${libs.logback}"
-    implementation "ch.qos.logback:logback-access:${libs.logback}"
-    implementation "org.projectlombok:lombok:${libs.lombok}"
-    implementation "tony-common:tony-common-utils:${libs.tony_common_utils}"
-    implementation 'org.springframework:spring-context:5.1.8.RELEASE'
-    implementation 'org.apache.zookeeper:zookeeper:3.4.14'
-    implementation 'com.google.code.gson:gson:2.8.5'
 }

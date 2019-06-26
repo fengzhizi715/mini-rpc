@@ -74,7 +74,7 @@ public class ZooKeeperServiceDiscovery implements ServiceDiscovery {
             zk = new ZooKeeper(registryAddress, Constants.ZK_SESSION_TIMEOUT, new Watcher() {
                 @Override
                 public void process(WatchedEvent event) {
-                    if (event.getState() == Watcher.Event.KeeperState.SyncConnected) {
+                    if (event.getState() == Event.KeeperState.SyncConnected) {
                         latch.countDown();
                     }
                 }
